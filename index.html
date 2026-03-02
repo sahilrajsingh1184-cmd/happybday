@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,23 +13,45 @@
 <script type="text/javascript" src="./file/jscex-builderbase.min.js"></script>
 <script type="text/javascript" src="./file/jscex-async.min.js"></script>
 <script type="text/javascript" src="./file/jscex-async-powerpack.min.js"></script>
-<script type="text/javascript" src="./file/functions.js" charset="utf-8"></script>
-<script type="text/javascript" src="./file/love.js" charset="utf-8"></script>
+<script type="text/javascript" src="./file/functions.js"></script>
+<script type="text/javascript" src="./file/love.js"></script>
 
 <style>
 #cakeBox {
     text-align: center;
     margin-top: 150px;
+    position: relative;
+    z-index: 10;
 }
 
 #cake {
-    font-size: 90px;
+    font-size: 100px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 #cake:hover {
     transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(800px) rotate(720deg);
+        opacity: 0;
+    }
 }
 </style>
 
@@ -43,12 +66,13 @@ function playAudio() {
 
 <body>
 <div id="main">
+
 <div id="error">
 <a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>
 (<a href="http://firefox.com.cn/download/">Firefox</a>)
 </div>
 
-<audio autoplay="autoplay" id="myAudio">
+<audio autoplay id="myAudio">
 <source src="aud.mp3" type="audio/mp3" />
 </audio>
 
@@ -56,14 +80,14 @@ function playAudio() {
 
 <div id="text">
 
-<!-- 🎂 CAKE SECTION -->
+<!-- 🎂 Cake First -->
 <div id="cakeBox">
     <div id="cake">🎂</div>
-    <p style="color:white; font-size:18px;">Click the cake 🎉</p>
+    <p style="color:white;">Click the cake 🎉</p>
 </div>
 
-<!-- 💌 MESSAGE SECTION -->
-<div id="code" style="display:none;">
+<!-- 💌 Message Hidden Initially -->
+<div id="code" style="display:none; animation: fadeIn 2s ease forwards;">
 <span class="say">my lil doremon 😊</span><br>
 <span class="say">Happy Birthday 🎈</span><br>
 <span class="say">May god bless you 🍀</span><br>
@@ -84,12 +108,51 @@ function playAudio() {
 </div>
 </div>
 
-<!-- 🎂 Cake Click Script -->
+<!-- 🎂 Cake Click + Confetti -->
 <script>
 document.getElementById("cake").onclick = function() {
+
     document.getElementById("cakeBox").style.display = "none";
     document.getElementById("code").style.display = "block";
+
+    for (let i = 0; i < 40; i++) {
+        let conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.backgroundColor =
+            "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+        conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(conf);
+
+        setTimeout(() => conf.remove(), 3000);
+    }
 };
+</script>
+
+<!-- 🌸 KEEPING YOUR ORIGINAL TREE ANIMATION -->
+<script>
+(function() {
+    var canvas = $('#canvas');
+    if (!canvas[0].getContext) {
+        $("#error").show();
+        return false;
+    }
+
+    var width = canvas.width();
+    var height = canvas.height();        
+    canvas.attr("width", width);
+    canvas.attr("height", height);
+
+    var opts = {
+        seed: { x: width / 2 - 20, color: "rgb(190, 26, 37)", scale: 2 },
+        branch: [[[535,680,570,250,500,200,30,100]]],
+        bloom: { num: 700, width: 1080, height: 650 },
+        footer: { width: 1200, height: 5, speed: 10 }
+    };
+
+    var tree = new Tree(canvas[0], width, height, opts);
+    tree.grow();
+})();
 </script>
 
 </body>
