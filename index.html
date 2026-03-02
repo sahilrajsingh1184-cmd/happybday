@@ -1,158 +1,191 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>HBD love</title>
-
-<link type="text/css" rel="stylesheet" href="./file/default.css">
-<script type="text/javascript" src="./file/jquery.min.js"></script>
-<script type="text/javascript" src="./file/jscex.min.js"></script>
-<script type="text/javascript" src="./file/jscex-parser.js"></script>
-<script type="text/javascript" src="./file/jscex-jit.js"></script>
-<script type="text/javascript" src="./file/jscex-builderbase.min.js"></script>
-<script type="text/javascript" src="./file/jscex-async.min.js"></script>
-<script type="text/javascript" src="./file/jscex-async-powerpack.min.js"></script>
-<script type="text/javascript" src="./file/functions.js"></script>
-<script type="text/javascript" src="./file/love.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💙</title>
 
 <style>
-#cakeBox {
-    text-align: center;
-    margin-top: 150px;
-    position: relative;
-    z-index: 10;
+body{
+margin:0;
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+font-family:Arial, sans-serif;
 }
 
-#cake {
-    font-size: 100px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+/* 🎂 Cake */
+#cakeContainer{
+position:absolute;
+width:220px;
+height:220px;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
 }
 
-#cake:hover {
-    transform: scale(1.2);
+.cake{
+width:200px;
+height:120px;
+background:#ff4d6d;
+border-radius:20px;
+position:relative;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+transition:1s;
 }
 
-@keyframes fadeIn {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
+.layer{
+position:absolute;
+width:100%;
+height:40px;
+background:#fff0f5;
+top:40px;
 }
 
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -10px;
-    animation: fall 3s linear forwards;
+.knife{
+position:absolute;
+width:6px;
+height:180px;
+background:white;
+top:-200px;
+left:50%;
+transform:translateX(-50%);
+transition:1s;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(800px) rotate(720deg);
-        opacity: 0;
-    }
+/* Cut animation */
+.cut .knife{
+top:-20px;
+}
+
+.splitLeft{
+transform:translateX(-150px) rotate(-20deg);
+opacity:0;
+transition:1s;
+}
+
+.splitRight{
+transform:translateX(150px) rotate(20deg);
+opacity:0;
+transition:1s;
+}
+
+/* 🌸 Flowers */
+.flower{
+position:absolute;
+font-size:22px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(360deg);
+opacity:0;
+}
+}
+
+/* 💌 Card */
+#card{
+position:absolute;
+bottom:-400px;
+width:85%;
+max-width:320px;
+padding:20px;
+background:white;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+text-align:center;
+transition:1s;
+transform:rotateY(90deg);
+}
+
+#card.show{
+bottom:20%;
+transform:rotateY(0deg);
+}
+
+h2{
+color:#ff4d6d;
+margin-top:0;
+}
+
+p{
+font-size:14px;
+line-height:1.5;
 }
 </style>
-
-<script>
-function playAudio() {
-    var audio = document.getElementById("myAudio");
-    audio.play();
-}
-</script>
-
 </head>
 
 <body>
-<div id="main">
 
-<div id="error">
-<a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>
-(<a href="http://firefox.com.cn/download/">Firefox</a>)
+<!-- 🎂 Cake Section -->
+<div id="cakeContainer">
+<div class="cake" id="cake">
+<div class="layer"></div>
+</div>
+<div class="knife" id="knife"></div>
 </div>
 
-<audio autoplay id="myAudio">
-<source src="aud.mp3" type="audio/mp3" />
-</audio>
-
-<div id="wrap">
-
-<div id="text">
-
-<!-- 🎂 Cake First -->
-<div id="cakeBox">
-    <div id="cake">🎂</div>
-    <p style="color:white;">Click the cake 🎉</p>
+<!-- 💌 Card -->
+<div id="card">
+<h2>Happy Birthday 💙</h2>
+<p>
+Happy Birthday, my dear Doremon 💙🎂<br><br>
+From the bottom of my heart, I just want to say how grateful I am to have you in my life. 
+You are not just my best friend, you are my comfort, my safe place, and the reason behind so many of my smiles. 💖<br><br>
+I know I annoy you sometimes (maybe a lot 😅), but please remember it’s only because I feel so close to you. 
+You mean more to me than I can ever properly explain. 🌸<br><br>
+On your special day, I pray that your life is filled with happiness, success, peace, and endless laughter. 
+May all your dreams come true, and may your beautiful smile never fade. ✨<br><br>
+Stay the same sweet, caring, and amazing person that you are. 
+Wishing you the happiest birthday ever, my dear Doremon. 💙🎉
+</p>
 </div>
 
-<!-- 💌 Message Hidden Initially -->
-<div id="code" style="display:none; animation: fadeIn 2s ease forwards;">
-<span class="say">my lil doremon 😊</span><br>
-<span class="say">Happy Birthday 🎈</span><br>
-<span class="say">May god bless you 🍀</span><br>
-<span class="say">Happy Birthday to my favorite human ❤️ Sorry for annoying you all the time, 💕</span><br>
-<span class="say">but you’re stuck with me because you’re my safe place and my best friend. ❤️</span><br>
-<span class="say">🥺 just want you to be happpyyyyyy ❤️</span><br>
-<span class="say">Hope u have a great day today ❤️😘</span><br>
-</div>
-
-</div>
-
-<div id="clock-box">
-<span id="clock">577 days 0 hours 0 minutes 0 seconds</span>
-</div>
-
-<canvas id="canvas" width="1100" height="680"></canvas>
-
-</div>
-</div>
-
-<!-- 🎂 Cake Click + Confetti -->
 <script>
-document.getElementById("cake").onclick = function() {
+const cakeContainer=document.getElementById("cakeContainer");
+const cake=document.getElementById("cake");
+const knife=document.getElementById("knife");
+const card=document.getElementById("card");
 
-    document.getElementById("cakeBox").style.display = "none";
-    document.getElementById("code").style.display = "block";
+cakeContainer.onclick=function(){
 
-    for (let i = 0; i < 40; i++) {
-        let conf = document.createElement("div");
-        conf.className = "confetti";
-        conf.style.left = Math.random() * window.innerWidth + "px";
-        conf.style.backgroundColor =
-            "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-        conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(conf);
+// knife drop
+cakeContainer.classList.add("cut");
 
-        setTimeout(() => conf.remove(), 3000);
-    }
+setTimeout(()=>{
+cake.classList.add("splitLeft");
+},1000);
+
+setTimeout(()=>{
+cake.classList.add("splitRight");
+cakeContainer.style.opacity="0";
+},1300);
+
+// flowers explosion
+setTimeout(()=>{
+for(let i=0;i<50;i++){
+let flower=document.createElement("div");
+flower.className="flower";
+flower.innerHTML="🌸";
+flower.style.left=Math.random()*100+"vw";
+flower.style.top="-40px";
+flower.style.animationDuration=(Math.random()*2+3)+"s";
+document.body.appendChild(flower);
+setTimeout(()=>flower.remove(),4000);
+}
+},1500);
+
+// show card
+setTimeout(()=>{
+card.classList.add("show");
+},3500);
+
 };
-</script>
-
-<!-- 🌸 KEEPING YOUR ORIGINAL TREE ANIMATION -->
-<script>
-(function() {
-    var canvas = $('#canvas');
-    if (!canvas[0].getContext) {
-        $("#error").show();
-        return false;
-    }
-
-    var width = canvas.width();
-    var height = canvas.height();        
-    canvas.attr("width", width);
-    canvas.attr("height", height);
-
-    var opts = {
-        seed: { x: width / 2 - 20, color: "rgb(190, 26, 37)", scale: 2 },
-        branch: [[[535,680,570,250,500,200,30,100]]],
-        bloom: { num: 700, width: 1080, height: 650 },
-        footer: { width: 1200, height: 5, speed: 10 }
-    };
-
-    var tree = new Tree(canvas[0], width, height, opts);
-    tree.grow();
-})();
 </script>
 
 </body>
