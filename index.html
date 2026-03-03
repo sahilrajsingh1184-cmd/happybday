@@ -1,423 +1,440 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Doremon 💙</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Flipbook 💙</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-body{
-margin:0;
-overflow:hidden;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(145deg, #4b7bec, #2c3e8c);
-font-family:'Segoe UI',Arial,sans-serif;
-}
+    body {
+      background: linear-gradient(145deg, #1e3c72, #2a5298);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      perspective: 2000px;
+      overflow: hidden;
+      position: relative;
+    }
 
-/* 🎂 Realistic Cake with Candles */
-#cakeContainer{
-position:absolute;
-width:280px;
-height:280px;
-display:flex;
-justify-content:center;
-align-items:center;
-cursor:pointer;
-z-index:10;
-filter:drop-shadow(0 15px 20px rgba(0,0,0,0.3));
-}
+    /* floating sparkles background */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff9e6;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #ffd966;
+      pointer-events: none;
+      z-index: 1;
+      animation: twinkle 3s infinite alternate;
+    }
 
-.cake{
-width:240px;
-height:140px;
-background:#f9e0c0;  /* sponge base */
-border-radius:30px 30px 15px 15px;
-position:relative;
-box-shadow:0 8px 0 #c59a6b, 0 20px 25px rgba(0,0,0,0.5);
-transition:1s;
-overflow:visible;
-}
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
 
-/* icing drip effect */
-.cake::before{
-content:"";
-position:absolute;
-width:100%;
-height:30px;
-background:#fff6e8;
-top:-10px;
-left:0;
-border-radius:50% 50% 0 0;
-box-shadow:0 5px 0 #ffe0b5;
-}
+    /* main flipbook container */
+    .book {
+      position: relative;
+      width: 700px;
+      height: 500px;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+      border-radius: 20px 10px 10px 20px;
+    }
 
-.layer{
-position:absolute;
-width:100%;
-height:40px;
-background:#fbd1a0;  /* middle filling */
-top:45px;
-border-top:3px solid #ffb47b;
-border-bottom:3px solid #ffb47b;
-box-shadow:inset 0 2px 5px rgba(0,0,0,0.1);
-}
+    .book.flipped {
+      transform: rotateY(-25deg) translateX(50px);
+    }
 
-/* candles */
-.candle{
-position:absolute;
-width:16px;
-height:55px;
-background:#ff9ff3;
-bottom:105px;
-border-radius:8px 8px 4px 4px;
-box-shadow:0 8px 0 #e67fb3, 0 10px 15px rgba(0,0,0,0.2);
-}
+    /* left page (cover) */
+    .cover {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      left: 0;
+      background: #fbd6b4;  /* vintage paper */
+      transform-origin: right center;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(0.3, 0.9, 0.4, 1);
+      backface-visibility: hidden;
+      border-radius: 20px 0 0 20px;
+      box-shadow: inset -5px 0 15px rgba(0,0,0,0.2), 5px 5px 20px rgba(0,0,0,0.4);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.candle::before{
-content:"";
-position:absolute;
-width:20px;
-height:20px;
-background:#feca57;
-border-radius:50%;
-top:-16px;
-left:-2px;
-box-shadow:0 0 15px #ffb142;
-}
+    .cover-page {
+      background: #fce5cd;
+      background-image: radial-gradient(circle at 30% 40%, #fff1d6 2px, transparent 2px), 
+                        radial-gradient(circle at 70% 80%, #fff1d6 2px, transparent 2px);
+      background-size: 40px 40px;
+    }
 
-.candle1{ left: 50px; }
-.candle2{ left: 110px; }
-.candle3{ left: 170px; }
+    .cover h1 {
+      font-size: 38px;
+      color: #2c3e50;
+      text-shadow: 3px 3px 0 #f8c291;
+      margin-bottom: 20px;
+      transform: rotate(-2deg);
+    }
 
-/* flame glow */
-.candle::after{
-content:"";
-position:absolute;
-width:10px;
-height:20px;
-background:rgba(255,200,100,0.6);
-border-radius:50%;
-top:-25px;
-left:3px;
-filter:blur(3px);
-animation:flicker 0.2s infinite alternate;
-}
+    .cover-cake {
+      font-size: 110px;
+      line-height: 1;
+      margin: 20px 0;
+      filter: drop-shadow(8px 12px 10px #ad6d4b);
+    }
 
-@keyframes flicker{
-0%{opacity:0.8; transform:scale(1);}
-100%{opacity:1; transform:scale(1.2);}
-}
+    .cover-sub {
+      font-size: 24px;
+      color: #1e3c72;
+      background: #ffe9ce;
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: inset 0 -3px 0 #b68b6b;
+    }
 
-/* realistic knife (hidden initially) */
-.knife{
-position:absolute;
-width:8px;
-height:200px;
-background:linear-gradient(135deg, #d1d1d1, #a0a0a0);
-top:-200px;
-left:50%;
-transform:translateX(-50%);
-border-radius:50% 50% 5px 5px;
-box-shadow:0 0 0 2px #bfbfbf, 0 15px 15px rgba(0,0,0,0.3);
-z-index:20;
-transition:top 0.8s cubic-bezier(0.1, 1, 0.3, 1);
-}
+    /* right page (initially hidden behind) */
+    .page-right {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      left: 50%;
+      background: #fffef7;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(0.3, 0.9, 0.4, 1);
+      backface-visibility: hidden;
+      border-radius: 0 20px 20px 0;
+      box-shadow: inset 5px 0 15px rgba(0,0,0,0.1), -5px 5px 20px rgba(0,0,0,0.3);
+      z-index: 5;
+      padding: 30px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
 
-.knife::before{
-content:"";
-position:absolute;
-width:20px;
-height:40px;
-background:linear-gradient(135deg, #ececec, #b0b0b0);
-top:-35px;
-left:-6px;
-border-radius:40% 40% 10px 10px;
-transform:rotate(10deg);
-box-shadow:inset -2px -2px 5px #707070;
-}
+    /* inner right page content (message) */
+    .message {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #2d3e50;
+      background: #fff6e8;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: inset 0 0 0 2px #ffe3c9, 0 5px 10px #dbb48d;
+      margin-top: 15px;
+    }
 
-.knife::after{
-content:"";
-position:absolute;
-width:15px;
-height:30px;
-background:silver;
-top:-30px;
-left:-3px;
-border-radius:20px;
-filter:blur(3px);
-opacity:0.5;
-}
+    .message h2 {
+      color: #b13e5c;
+      font-size: 28px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-family: 'Brush Script MT', cursive;
+    }
 
-/* cut animation */
-.cut .knife{
-top:-20px;  /* knife drops into cake */
-}
+    .signoff {
+      margin-top: 20px;
+      font-style: italic;
+      text-align: right;
+      color: #4a6b8a;
+      font-size: 18px;
+    }
 
-.splitLeft{
-transform:translateX(-180px) rotate(-25deg);
-opacity:0;
-transition:1.2s ease-in;
-}
+    /* realistic cake inside cover (3D looking) */
+    .real-cake {
+      position: relative;
+      width: 220px;
+      height: 140px;
+      margin: 15px auto;
+    }
 
-.splitRight{
-transform:translateX(180px) rotate(25deg);
-opacity:0;
-transition:1.2s ease-in;
-}
+    .cake-base {
+      width: 200px;
+      height: 90px;
+      background: #e3b38b;
+      border-radius: 40% 40% 20px 20px;
+      position: relative;
+      top: 40px;
+      left: 10px;
+      box-shadow: 0 10px 0 #aa6f4a, 0 20px 15px #00000030;
+      background: linear-gradient(145deg, #f2c49b, #d9996b);
+    }
 
-/* 💐 Big Bouquet container */
-.bouquetContainer{
-position:absolute;
-width:100%;
-height:100%;
-pointer-events:none;
-z-index:5;
-}
+    .cake-top {
+      width: 180px;
+      height: 50px;
+      background: #f7d9b9;
+      border-radius: 50% 50% 10px 10px;
+      position: relative;
+      top: -10px;
+      left: 20px;
+      box-shadow: 0 5px 0 #c18454, inset 0 2px 15px #ffeecc;
+      background: linear-gradient(145deg, #ffdfba, #efb787);
+    }
 
-.flower, .popper{
-position:absolute;
-font-size:28px;
-animation:fall linear forwards;
-filter:drop-shadow(0 5px 5px rgba(0,0,0,0.2));
-}
+    .icing {
+      width: 190px;
+      height: 20px;
+      background: #fff2db;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      top: -30px;
+      left: 15px;
+      box-shadow: 0 -3px 0 #ffc27a;
+      background: linear-gradient(145deg, #fffae6, #ffe0b9);
+    }
 
-@keyframes fall{
-to{
-transform:translateY(110vh) rotate(360deg);
-opacity:0;
-}
-}
+    /* candles with flames */
+    .candle {
+      position: absolute;
+      width: 14px;
+      height: 55px;
+      background: #fd79a8;
+      bottom: 50px;
+      border-radius: 7px 7px 4px 4px;
+      box-shadow: 0 8px 0 #d45d87, 0 10px 10px #00000030;
+    }
 
-/* special big flowers (sunflower & rose) */
-.bigBouquet{
-position:absolute;
-bottom:-50px;
-left:50%;
-transform:translateX(-50%);
-font-size:70px;
-white-space:nowrap;
-opacity:0;
-transition:1.5s;
-filter:drop-shadow(0 10px 15px #00000050);
-z-index:20;
-}
+    .candle::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ffb347;
+      border-radius: 50%;
+      top: -18px;
+      left: -3px;
+      box-shadow: 0 0 25px #ffa726;
+    }
 
-.bigBouquet.show{
-bottom:30%;
-opacity:1;
-}
+    .candle::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 25px;
+      background: rgba(255, 200, 50, 0.5);
+      border-radius: 50%;
+      top: -30px;
+      left: 2px;
+      filter: blur(5px);
+      animation: flicker 0.2s infinite alternate;
+    }
 
-/* party popper pop */
-.popper{
-font-size:45px;
-animation:pop 1s ease-out forwards;
-}
+    @keyframes flicker {
+      0% { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
 
-@keyframes pop{
-0%{transform:scale(0) rotate(0); opacity:1;}
-50%{transform:scale(1.5) rotate(20deg);}
-100%{transform:scale(1) translateY(-200px) rotate(0); opacity:0;}
-}
+    .candle1 { left: 60px; }
+    .candle2 { left: 110px; }
+    .candle3 { left: 160px; }
 
-/* 💌 Card */
-#card{
-position:absolute;
-bottom:-400px;
-width:85%;
-max-width:340px;
-padding:25px;
-background:#fffcf0;
-border-radius:25px 25px 10px 10px;
-box-shadow:0 20px 35px rgba(0,0,0,0.5), inset 0 0 0 2px #ffdab9;
-text-align:center;
-transition:1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-transform:rotateY(90deg);
-border-left:8px solid #ff8a9f;
-border-right:8px solid #8ec5fc;
-z-index:30;
-}
+    /* flower decorations on cake */
+    .flower-deco {
+      position: absolute;
+      font-size: 22px;
+      bottom: 80px;
+    }
+    .deco1 { left: 25px; transform: rotate(-15deg); }
+    .deco2 { right: 25px; transform: rotate(10deg); }
 
-#card.show{
-bottom:18%;
-transform:rotateY(0deg);
-}
+    /* bouquet inside */
+    .bouquet-inside {
+      font-size: 50px;
+      text-align: center;
+      margin: 20px 0;
+      filter: drop-shadow(0 8px 8px #936e4e);
+      animation: sway 3s infinite alternate;
+    }
 
-h2{
-color:#3b4f9c;
-margin-top:0;
-font-size:28px;
-text-shadow:2px 2px 0 #ffb6c1;
-}
+    @keyframes sway {
+      0% { transform: rotate(-2deg); }
+      100% { transform: rotate(2deg); }
+    }
 
-p{
-font-size:15px;
-line-height:1.6;
-color:#2c3e50;
-background:#fef9e7;
-padding:12px;
-border-radius:15px;
-box-shadow:inset 0 0 10px #ffe5b4;
-}
+    /* party poppers and flowers after flip */
+    .popper, .shower-flower {
+      position: absolute;
+      font-size: 40px;
+      pointer-events: none;
+      z-index: 100;
+      animation: pop 1.5s ease-out forwards;
+    }
 
-.signature{
-font-style:italic;
-color:#ff6f91;
-margin-top:10px;
-font-size:16px;
-}
+    @keyframes pop {
+      0% { transform: scale(0) rotate(0); opacity: 1; }
+      50% { transform: scale(1.5) rotate(20deg); }
+      100% { transform: translateY(-200px) scale(0.8) rotate(40deg); opacity: 0; }
+    }
 
-/* background sparkle */
-.sparkle{
-position:absolute;
-width:5px;
-height:5px;
-background:white;
-border-radius:50%;
-box-shadow:0 0 15px gold;
-animation:twinkle 2s infinite;
-}
+    .shower-flower {
+      animation: fall 3s linear forwards;
+    }
 
-@keyframes twinkle{
-0%{opacity:0.2;}
-100%{opacity:1;}
-}
-</style>
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* knife hidden inside book spine */
+    .book-knife {
+      position: absolute;
+      width: 10px;
+      height: 180px;
+      background: linear-gradient(135deg, #e0e0e0, #a0a0a0);
+      left: 50%;
+      top: 30px;
+      transform: translateX(-50%) rotate(5deg);
+      border-radius: 20% 20% 5px 5px;
+      box-shadow: 0 0 0 2px #aaa, 0 10px 15px black;
+      z-index: 25;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .book:hover .book-knife {
+      opacity: 0.4;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- Background sparkles (blue theme) -->
-<div id="sparkles"></div>
+<!-- sparkles -->
+<div id="sparkles-container"></div>
 
-<!-- 🎂 Cake Section with candles -->
-<div id="cakeContainer">
-<div class="cake" id="cake">
-<div class="layer"></div>
-<!-- three cute candles -->
-<div class="candle candle1"></div>
-<div class="candle candle2"></div>
-<div class="candle candle3"></div>
-</div>
-<div class="knife" id="knife"></div>
-</div>
+<!-- Flipbook -->
+<div class="book" id="book">
+  <!-- Left cover (front) -->
+  <div class="cover cover-page" id="cover">
+    <h1>💙 For Doremon 💙</h1>
+    <div class="real-cake">
+      <div class="cake-base"></div>
+      <div class="cake-top"></div>
+      <div class="icing"></div>
+      <!-- candles -->
+      <div class="candle candle1"></div>
+      <div class="candle candle2"></div>
+      <div class="candle candle3"></div>
+      <!-- little flowers on cake -->
+      <span class="flower-deco deco1">🌻</span>
+      <span class="flower-deco deco2">🌹</span>
+    </div>
+    <div class="cover-sub">Click to open 💫</div>
+    <div style="margin-top: 15px; font-size: 20px;">🎂 ✨ 🌻</div>
+  </div>
 
-<!-- Special big bouquet (sunflower & rose bunch) -->
-<div class="bigBouquet" id="bigBouquet">🌻🌹🌻🌹🌻🌹🌻🌹</div>
+  <!-- Right page (hidden until flip) -->
+  <div class="page-right" id="pageRight">
+    <div class="bouquet-inside">
+      🌻🌹🌻🌹🌻🌹🌻🌹
+    </div>
+    <div class="message">
+      <h2>Happy Birthday Doremon! 💙</h2>
+      <p>From the bottom of my heart, I just want to say how grateful I am to have you in my life. You are not just my best friend, you are my comfort, my safe place, and the reason behind so many of my smiles. 💖</p>
+      <p>I know I annoy you sometimes (maybe a lot 😅), but please remember it’s only because I feel so close to you. You mean more to me than I can ever properly explain. 🌸</p>
+      <p>On your special day, I pray that your life is filled with happiness, success, peace, and endless laughter. May all your dreams come true, and may your beautiful smile never fade. ✨</p>
+      <p>Stay the same sweet, caring, and amazing person that you are. Wishing you the happiest birthday ever, my dear Doremon. 💙🎉</p>
+      <div class="signoff">— Your bestie always 🌻</div>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <span style="font-size: 30px;">🎊 🎈 🎉</span>
+    </div>
+  </div>
 
-<!-- 💌 Birthday Card -->
-<div id="card">
-<h2>💙 Happy Birthday Doremon 💙</h2>
-<p>
-Happy Birthday, my dear Doremon! 🎂💙<br><br>
-From the bottom of my heart, I just want to say how grateful I am to have you in my life. 
-You are not just my best friend, you are my comfort, my safe place, and the reason behind so many of my smiles. 🌻🌹<br><br>
-I know I annoy you sometimes (maybe a lot 😅), but please remember it’s only because I feel so close to you. 
-You mean more to me than I can ever properly explain. 💖<br><br>
-On your special day, I pray that your life is filled with happiness, success, peace, and endless laughter. 
-May all your dreams come true, and may your beautiful smile never fade. ✨<br><br>
-Stay the same sweet, caring, and amazing person that you are. 
-Wishing you the happiest birthday ever, my dear Doremon. 💙🎉<br>
-<span class="signature">🌸 With love, your bestie 🌸</span>
-</p>
+  <!-- hidden knife (for effect) -->
+  <div class="book-knife"></div>
 </div>
 
 <script>
-const cakeContainer=document.getElementById("cakeContainer");
-const cake=document.getElementById("cake");
-const knife=document.getElementById("knife");
-const card=document.getElementById("card");
-const bigBouquet=document.getElementById("bigBouquet");
+  const book = document.getElementById('book');
+  const cover = document.getElementById('cover');
+  const pageRight = document.getElementById('pageRight');
 
-// Add some sparkles in background
-for(let i=0;i<30;i++){
-let sp=document.createElement("div");
-sp.className="sparkle";
-sp.style.left=Math.random()*100+"%";
-sp.style.top=Math.random()*100+"%";
-sp.style.animationDelay=Math.random()*3+"s";
-sp.style.width=Math.random()*6+2+"px";
-document.body.appendChild(sp);
-}
+  let flipped = false;
 
-cakeContainer.onclick=function(){
+  book.addEventListener('click', function(e) {
+    if (!flipped) {
+      // flip open the cover
+      cover.style.transform = 'rotateY(-155deg)';
+      pageRight.style.transform = 'rotateY(0deg)';
+      book.classList.add('flipped');
 
-// knife drop
-cakeContainer.classList.add("cut");
+      // celebrate with poppers & flowers
+      for (let i = 0; i < 40; i++) {
+        let el = document.createElement('div');
+        el.className = Math.random() > 0.5 ? 'popper' : 'shower-flower';
+        // mix of sunflowers, roses, poppers
+        let symbols = ['🎉', '✨', '🌻', '🌹', '🌼', '🌸', '🎊', '💙'];
+        el.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.top = Math.random() * 70 + '%';
+        el.style.fontSize = (Math.random() * 30 + 30) + 'px';
+        el.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 3000);
+      }
 
-setTimeout(()=>{
-cake.classList.add("splitLeft");
-},1000);
+      // also big bouquet animation on page
+      setTimeout(() => {
+        let bigBunch = document.createElement('div');
+        bigBunch.style.position = 'absolute';
+        bigBunch.style.left = '50%';
+        bigBunch.style.bottom = '20%';
+        bigBunch.style.transform = 'translateX(-50%)';
+        bigBunch.style.fontSize = '80px';
+        bigBunch.style.whiteSpace = 'nowrap';
+        bigBunch.style.zIndex = '200';
+        bigBunch.style.pointerEvents = 'none';
+        bigBunch.style.transition = 'all 2s';
+        bigBunch.style.opacity = '0';
+        bigBunch.innerHTML = '🌻🌹🌻🌹🌻🌹🌻🌹🎉🎉';
+        document.body.appendChild(bigBunch);
+        setTimeout(() => { bigBunch.style.opacity = '1'; bigBunch.style.bottom = '35%'; }, 50);
+        setTimeout(() => { bigBunch.style.opacity = '0'; bigBunch.style.bottom = '50%'; setTimeout(() => bigBunch.remove(), 1000); }, 1800);
+      }, 400);
 
-setTimeout(()=>{
-cake.classList.add("splitRight");
-cakeContainer.style.opacity="0";
-},1300);
+      flipped = true;
+    } else {
+      // close the book (optional)
+      cover.style.transform = 'rotateY(0deg)';
+      pageRight.style.transform = 'rotateY(180deg)';
+      book.classList.remove('flipped');
+      flipped = false;
+    }
+  });
 
-// 🌻🌹 BIG bouquet arrives with sunflowers and roses
-setTimeout(()=>{
-bigBouquet.classList.add("show");
-},1600);
+  // sparkles background
+  for (let i = 0; i < 40; i++) {
+    let sp = document.createElement('div');
+    sp.className = 'sparkle';
+    sp.style.left = Math.random() * 100 + '%';
+    sp.style.top = Math.random() * 100 + '%';
+    sp.style.animationDelay = Math.random() * 3 + 's';
+    sp.style.width = (Math.random() * 8 + 2) + 'px';
+    document.body.appendChild(sp);
+  }
 
-// bouquet explosion - mix of sunflower, rose, and party poppers
-setTimeout(()=>{
-for(let i=0;i<40;i++){
-let flower=document.createElement("div");
-flower.className="flower";
-// mix of sunflowers and roses and a few lilies
-let flowersArr=['🌻','🌹','🌻','🌹','🌻','🌹','🌼','🌸','🌺','🌷'];
-flower.innerHTML=flowersArr[Math.floor(Math.random()*flowersArr.length)];
-flower.style.left=Math.random()*100+"vw";
-flower.style.top="-50px";
-flower.style.fontSize=(Math.random()*20+25)+"px";
-flower.style.animationDuration=(Math.random()*2+3)+"s";
-flower.style.animationDelay=Math.random()*0.5+"s";
-document.body.appendChild(flower);
-setTimeout(()=>flower.remove(),5000);
-}
-
-// also some party poppers
-for(let i=0;i<15;i++){
-let popper=document.createElement("div");
-popper.className="popper";
-popper.innerHTML='🎉';
-popper.style.left=Math.random()*100+"vw";
-popper.style.top="50%";
-popper.style.fontSize="50px";
-popper.style.animationDuration="1.2s";
-popper.style.animationDelay=Math.random()*0.3+"s";
-document.body.appendChild(popper);
-setTimeout(()=>popper.remove(),2000);
-}
-
-// extra confetti with stars
-for(let i=0;i<25;i++){
-let star=document.createElement("div");
-star.className="flower";
-star.innerHTML='✨';
-star.style.left=Math.random()*100+"vw";
-star.style.top="-40px";
-star.style.fontSize="30px";
-star.style.animationDuration=(Math.random()*2+2)+"s";
-document.body.appendChild(star);
-setTimeout(()=>star.remove(),4000);
-}
-},1800);
-
-// show card
-setTimeout(()=>{
-card.classList.add("show");
-},2800);
-
-// Hide knife after cut (it's inside cake now, but we also make it disappear after split)
-setTimeout(()=>{
-knife.style.opacity="0";
-},1800);
-};
+  // pre-set the right page hidden (rotateY 180deg)
+  pageRight.style.transform = 'rotateY(180deg)';
+  cover.style.transform = 'rotateY(0deg)';
+  book.style.transform = 'rotateY(0deg)';
 </script>
-
 </body>
 </html>
